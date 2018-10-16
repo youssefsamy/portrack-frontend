@@ -1,0 +1,345 @@
+<div class="content">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <br>
+            <h3>Portfolio Management System</h3>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 text-right">
+            <br>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print this Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;Export to Excel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h4 class="pt-0">Your Portfolio</h4>
+    <br>
+    <div class="row">
+        <div class="col-12 col-md-3 col-lg-3">
+            <a href="#" id="refresh">Refresh</a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 text-center">
+            <ul class="t-links pl-0">
+                <li class="prev" (click)="prev()" [ngClass]="{'disabled': tId == '-2'}">
+                    <a><i class="fa fa-angle-left"></i></a>
+                </li>
+                <li class="link" [ngClass]="{'active': tId == '-2'}">
+                    <a [routerLink]="['/client/portfolio/T-2']">T-2</a>
+                </li>
+                <li class="link" [ngClass]="{'active': tId == '-1'}">
+                    <a [routerLink]="['/client/portfolio/T-1']">T-1</a>
+                </li>
+                <li class="link" [ngClass]="{'active': tId == ''}">
+                    <a [routerLink]="['/client/portfolio/T0']">T 0</a>
+                </li>
+                <li class="link" [ngClass]="{'active': tId == '+1'}">
+                    <a [routerLink]="['/client/portfolio/T1']">T+1</a>
+                </li>
+                <li class="link" [ngClass]="{'active': tId == '+2'}">
+                    <a [routerLink]="['/client/portfolio/T2']">T+2</a>
+                </li>
+                <li class="next" (click)="next()">
+                    <a><i class="fa fa-angle-right"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-3 col-lg-3 text-right">
+            <form class="pt-0">
+                <label for="inlineFormInput">Search:</label>
+                <input type="text" class="mb-2 mr-sm-2 mb-sm-0" name="portfolioHoldingFilter" placeholder="" [(ngModel)]="portfolioHoldingFilter">
+            </form>
+        </div>
+    </div>
+<!-- 
+    <div class="d-flex mb-2 align-items-center">
+        <div>
+           
+        </div>
+        <p class="ml-auto mr-1 mb-0">
+            Show
+            <select name="prmPageSize" [(ngModel)]="portfolioHolding.pageSize">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            entries
+        </p>
+    </div> -->
+    <table class="table table-bordered">
+        <thead class="table-active">
+            <tr>
+                <th>Custody</th>
+                <th>CRY</th>
+                <th>Nominal</th>
+                <th>Class</th>
+                <th>Code/ISIN</th>
+                <th>Description</th>
+                <th>CPN</th>
+                <th>Maturity</th>
+                <th>Bid</th>
+                <th>Cost</th>
+                <th>Change</th>
+                <th>Unrl. P/L</th>
+                <th>Acc. Int</th>
+                <th>Marcket Value</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="portfolioDetail">
+            <tr *ngFor="let item of portfolioDetail.holdings | filterBy: ['pv_custodian','pv_currency', 'pv_amount', 'pv_description']: portfolioHoldingFilter | paginate: {itemsPerPage: portfolioHolding.pageSize, currentPage: portfolioHolding.page}">
+                <td>{{item['pv_custodian']}}</td>
+                <td>{{item['pv_currency']}}</td>
+                <td>{{item['pv_amount']}}</td>
+                <td>{{item['pv_asset_class']}}</td>
+                <td>{{item['pv_code']}}</td>
+                <td>{{item['pv_description']}}</td>
+                <td>{{item['pv_coupon_rate']}}</td>
+                <td>{{item['pv_maturity_date']}}</td>
+                <td>{{item['pv_bid_price']}}</td>
+                <td>{{item['pv_cost_price']}}</td>
+                <td>{{item['pv_change']}}</td>
+                <td>{{item['pv_unrealized_pnl']}}</td>
+                <td>{{item['pv_accrued_interest']}}</td>
+                <td>{{item['pv_market_value']}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="14" style="text-align: right;">Total Estimated Market Value in
+                    <strong *ngIf="portfolioDetail">{{portfolioDetail['reference_currency']['code']}}: {{portfolioDetail.total_estimated_market_value}}</strong>
+                </td>
+            </tr>
+
+            <tr class="table-active">
+                <td colspan="14" style="text-align: right;" *ngIf="portfolioDetail">Refrenced Currency:
+                    <strong>{{portfolioDetail['reference_currency']['code']}}.</strong> Portfolio as of
+                    <strong>{{portfolioDetail.as_of | date: 'dd/MM/yyyy'}}</strong>. Last Transaction on
+                    <strong>{{portfolioDetail.last_transaction | date: 'dd/MM/yyyy'}}</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <app-paginator [total]="(portfolioDetail.holdings | filterBy: ['pv_custodian','pv_currency', 'pv_amount', 'pv_description']: portfolioHoldingFilter).length"
+        [currentPage]="portfolioHolding.page" [pageSize]="portfolioHolding.pageSize" (change)="portfolioHolding.page = $event"></app-paginator>
+
+    <!--<br>-->
+    <!--<p>Showing page 1 to 2 of 2 entries</p>-->
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <h4>Your Transactions</h4>
+            <br>
+            <div class="d-flex mb-2 align-items-center">
+                <h6>Latest Transactions</h6>
+                <p class="ml-auto mr-1 mb-0">
+                    Show
+                    <select name="prmPageSize" [(ngModel)]="latestTransactionData.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </p>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-active">
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Nom. Amt.</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of latestTransactions | paginate: {itemsPerPage: latestTransactionData.pageSize, currentPage: latestTransactionData.page}">
+                        <td>{{item.txn_type}}</td>
+                        <td>{{item.settlement_at | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.detail}}</td>
+                        <td>{{item.nominal_amount}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="14" style="text-align: right;">
+                            <a href="#">See All Transactions</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginator [total]="latestTransactions.length" [currentPage]="latestTransactionData.page" [pageSize]="latestTransactionData.pageSize"
+                (change)="latestTransactionData.page = $event"></app-paginator>
+
+
+            <br>
+            <div class="d-flex mb-2 align-items-center">
+                <h6>Expected Future Transactions</h6>
+                <p class="ml-auto mr-1 mb-0">
+                    Show
+                    <select name="prmPageSize" [(ngModel)]="latestTransactionData.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </p>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-active">
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Nom. Amt.</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="14" style="text-align: right;">
+                            <a href="#">See All Transactions</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginator [total]="latestTransactions.length" [currentPage]="latestTransactionData.page" [pageSize]="latestTransactionData.pageSize"
+                (change)="latestTransactionData.page = $event"></app-paginator>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-6">
+            <h4>Your Orders</h4>
+            <br>
+            <div class="d-flex mb-2 align-items-center">
+                <h6>Placed</h6>
+                <p class="ml-auto mr-1 mb-0">
+                    Show
+                    <select name="prmPageSize" [(ngModel)]="placeOrderData.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </p>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-active">
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Nom. Amt.</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of placedOrders | paginate: {itemsPerPage: placeOrderData.pageSize, currentPage: placeOrderData.page}">
+                        <td>{{item.details.order_type}}</td>
+                        <td>{{item.received_at | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.details.additional_note}}</td>
+                        <td>{{item.details.nominal_amount}}</td>
+                        <td>{{item.details.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginator [total]="placedOrders.length" [currentPage]="placeOrderData.page" [pageSize]="placeOrderData.pageSize" (change)="placeOrderData.page = $event"></app-paginator>
+
+            <br>
+            <div class="d-flex mb-2 align-items-center">
+                <h6>In Process</h6>
+                <p class="ml-auto mr-1 mb-0">
+                    Show
+                    <select name="prmPageSize" [(ngModel)]="processOrdersData.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </p>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-active">
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Nom. Amt.</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of processOrders | paginate: {itemsPerPage: processOrdersData.pageSize, currentPage: processOrdersData.page}">
+                        <td>{{item.txn_type}}</td>
+                        <td>{{item.settlement_at | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.detail}}</td>
+                        <td>{{item.nominal_amount}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginator [total]="processOrders.length" [currentPage]="processOrdersData.page" [pageSize]="processOrdersData.pageSize"
+                (change)="processOrdersData.page = $event"></app-paginator>
+            <br>
+            <div class="d-flex mb-2 align-items-center">
+                <h6>Executed</h6>
+                <p class="ml-auto mr-1 mb-0">
+                    Show
+                    <select name="prmPageSize" [(ngModel)]="executedOrdersData.pageSize">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </p>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-active">
+                    <tr>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Detail</th>
+                        <th>Nom. Amt.</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of executedOrders | paginate: {itemsPerPage: executedOrdersData.pageSize, currentPage: executedOrdersData.page}">
+                        <td>{{item.details.order_type}}</td>
+                        <td>{{item.received_at | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{item.details.additional_note}}</td>
+                        <td>{{item.details.nominal_amount}}</td>
+                        <td>{{item.details.price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginator [total]="executedOrders.length" [currentPage]="executedOrdersData.page" [pageSize]="executedOrdersData.pageSize"
+                (change)="executedOrdersData.page = $event"></app-paginator>
+        </div>
+    </div>
+    <br>
+    <p class="disc">Disclaimer</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque molestie, ligula vel fringilla eleifend, lacus neque
+        consectetur arcu, nec sodales metus erat vel eros. Ut sed tincidunt urna, eget consequat urna. Duis non molestie
+        dui, et gravida est. In rutrum tortor at hendrerit egestas. Nullam ipsum ex, ultricies sit amet nisi vel, convallis
+        volutpat turpis. Cras tincidunt neque sed velit viverra, vitae lacinia eros ornare. Etiam scelerisque arcu vel elit
+        volutpat aliquet. Proin in nibh quam.</p>
+    <p>Vestibulum tellus mi, porta eget leo ac, convallis finibus augue. Maecenas ac nunc tellus. Pellentesque finibus ornare
+        tortor vel semper. Mauris vitae libero orci. Quisque id libero augue. Aliquam rhoncus ultrices ante eu pharetra.
+        Aenean vel porttitor magna. Vivamus porta nibh non metus sodales, vitae varius nisl varius. Nam fermentum, velit
+        vel sodales consectetur, mi est dictum urna, at commodo massa ligula ut sapien.</p>
+    <p>Maecenas posuere elit neque. Fusce tempus leo nec feugiat malesuada. Fusce lacinia lobortis eros vitae facilisis. Praesent
+        tristique commodo nisi, id vulputate lorem euismod eu. Etiam scelerisque diam eu scelerisque laoreet. Etiam dictum
+        sem nec quam vulputate accumsan. Nunc lobortis cursus leo, ornare semper sapien vehicula et. Cras a est eleifend,
+        fermentum ipsum vehicula, vestibulum leo. Nam molestie nibh sit amet tristique vulputate. Fusce vel sapien sodales,
+        commodo nisi non, consequat justo. Proin ex ante, sagittis ut consequat non, consequat nec metus. Ut eros quam, iaculis
+        vitae justo eget, placerat imperdiet risus. Pellentesque eu convallis felis. Donec varius auctor lorem, vel euismod
+        metus volutpat eget. Quisque ac elit urna.</p>
+</div>

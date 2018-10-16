@@ -1,0 +1,4 @@
+<input class="awesomplete form-control" list="mylist" (keyup)="searchKey()" [(ngModel)]="isin">
+<datalist id="mylist">
+    <option *ngFor="let item of dataList">{{item.isin}}, {{item.name}}</option>
+</datalist>

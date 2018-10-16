@@ -1,0 +1,69 @@
+Register New Organization:
+	- (Field) Organization Name
+	- (Field) Organization Address
+	- (Field) Organization Contact Number
+	- (Field) Organization Website
+	- (Field) Administrator Username
+	- (Field) Administrator Password
+	- (Field) Administrator Password Validation
+	- (Field) Administrator First Name
+	- (Field) Administartor Last Name
+	- (Field) Administrator Email
+	- (Field) Administrator Contact Number
+	
+Administrator Dashboard:
+	- (Link) Create Operator User
+	- (Table) List of Operator Users (Actions: View Details/Edit)
+	- (Link) Create Client User
+	- (Table) List of Client Users (Actions: View Details/Edit)
+
+Create Operator User:
+	- (Field) Username
+	- (Field) Password
+	- (Field) Password Validation
+	- (Field) First Name
+	- (Field) Last Name
+	- (Field) Email
+	- (Field) Operator Code
+
+Operator Details:
+	- Username
+	- First Name
+	- Last Name
+	- Email
+	- (List) Clients Assigned
+
+Create Client User:
+	- (Field) Username
+	- (Field) Password
+	- (Field) Password Validation
+	- (Field) First Name
+	- (Field) Last Name
+	- (Field) Email
+	- (Field) Client Code
+	- (Field Multi Select) - Assigned Operators
+	
+Client Details:
+	- Username
+	- First Name
+	- Last Name
+	- Email
+	- (Table) Assigned Operators
+	- (Table) Accounts
+	- (Link) Create New Client Account
+	
+Create New Client Account:
+	- (Field) Account Name
+	- (Field) Account Number
+	- (Field) Account SWIFT Code
+	- (Field) Account Code
+	- (Field) Account Description
+	- (Field) Custodian Name
+	- (Field) Custodian Descritpion
+	- (Field) Custodian Contact First Name
+	- (Field) Custodian Contact Last Name
+	- (Field) Custodian Contact Email
+	- (Field) Custodian Contact Phone Number
+	- (Field) Custodian Code
+	
+

@@ -1,0 +1,73 @@
+<div class="may page-prospect">
+  <div class="content">
+    <h4>Client Detail: {{client.username}}</h4>
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-active">
+          <label>Username:</label>
+        </th>
+        <td>{{client.username}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>First Name:</label>
+        </th>
+        <td>{{client.first_name}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Last Name:</label>
+        </th>
+        <td>{{client.last_name}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Email:</label>
+        </th>
+        <td>{{client.email}}</td>
+      </tr>
+    </table>
+
+    <h6>Assigned Operators</h6>
+    <table class="table table-bordered">
+      <thead>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Name</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operator of clientDetail.operators">
+          <td>{{operator.id}}</td>
+          <td>{{operator.code}}</td>
+          <td>{{operator.name}}</td>
+        </tr>
+        <tr *ngIf="!clientDetail.operators.length" class="text-center">
+          <td colspan="3">No Assigned operators</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h6>Accounts</h6>
+    <table class="table table-bordered">
+      <thead>
+        <th>ID</th>
+        <th>Code</th>
+        <th width="100"></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of clientDetail.accounts">
+          <td>{{account.id}}</td>
+          <td>{{account.code}}</td>
+          <td class="text-center">
+            <a *ngIf="client.profile" [routerLink]="['/admin/edit/clientaccount', account.id]">Edit</a>
+          </td>
+        </tr>
+        <tr *ngIf="!clientDetail.accounts.length" class="text-center">
+          <td colspan="3">No Assigned accounts</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a *ngIf="client.profile" [routerLink]="['/admin/new/clientaccount', client.id, client.profile.client.id]" class="btn btn-secondary">Create New Client Account</a>
+  </div>
+</div>

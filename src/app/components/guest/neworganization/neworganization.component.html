@@ -1,0 +1,173 @@
+<div class="may page-neworganization">
+  <div class="content">
+    <h4 class="pb-3">Register New Account</h4>
+    <form [formGroup]="form" class="pt-0">
+
+      <div class="organization-detail">
+        <div class="title">
+          <h5>Organization Details</h5>
+        </div>
+        <div class="inner">
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Organization Name</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_name')">
+              <input type="text" class="form-control" formControlName="organization_name">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_name').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Organization Short Name</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_short_name')">
+              <input type="text" class="form-control" formControlName="organization_short_name">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_short_name').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Organization Address</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_address')">
+              <input type="text" class="form-control" formControlName="organization_address">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_address').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2  offset-sm-1 col-form-label">Organization Address2</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_address2')">
+              <input type="text" class="form-control" formControlName="organization_address2">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_address2').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Organization City</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_city')">
+              <input type="text" class="form-control" formControlName="organization_city">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_city').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Organization Country</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_country')">
+              <select class="form-control" formControlName="organization_country">
+                <option *ngFor="let item of countries" [value]="item.code">{{item.name}}</option>
+              </select>
+              <div *ngIf="validate.getFieldErrors(form, 'organization_country').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+
+
+            <label class="col-sm-2 col-form-label">Organization Phone</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_phone')">
+              <input type="text" class="form-control" formControlName="organization_phone">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_phone').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Organization Email</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'organization_email')">
+              <input type="text" class="form-control" formControlName="organization_email">
+              <div *ngIf="validate.getFieldErrors(form, 'organization_email').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="organization-detail pt-3">
+        <div class="title">
+          <h5>Administrator Details</h5>
+        </div>
+        <div class="inner">
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Administrator First Name</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_first_name')">
+              <input type="text" class="form-control" formControlName="administrator_first_name">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_first_name').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Administrator Last Name</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_last_name')">
+              <input type="text" class="form-control" formControlName="administrator_last_name">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_last_name').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Administrator Username</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_username')">
+              <input type="text" class="form-control" formControlName="administrator_username">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_username').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Administrator Password</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_password')">
+              <input type="password" class="form-control" formControlName="administrator_password">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_password').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Administrator Confirm Password</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_password_validate')">
+              <input type="password" class="form-control" formControlName="administrator_password_validate">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_password_validate').equalTo" class="text-danger">
+                Password does not match
+              </div>
+            </div>
+
+            <label class="col-sm-2 offset-sm-1 col-form-label">Administrator Email</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_email')">
+              <input type="text" class="form-control" formControlName="administrator_email">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_email').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Administrator Phone</label>
+            <div class="col-sm-3" [ngClass]="validate.displayFieldCss(form, 'administrator_phone')">
+              <input type="text" class="form-control" formControlName="administrator_phone">
+              <div *ngIf="validate.getFieldErrors(form, 'administrator_phone').required" class="text-danger">
+                This field is required
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group row pt-3">
+        <div class="col-sm-5">
+          <button type="button" class="btn btn-secondary" (click)="submit()">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

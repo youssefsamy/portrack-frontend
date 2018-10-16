@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <div class="form-group">
+    <label>Name(s)</label>
+    <input type="text" class="form-control" placeholder="" name="names" formControlName="names">
+  </div>
+
+  <div class="form-group">
+    <label>Surname</label>
+    <input type="text" class="form-control" placeholder="" name="surname" formControlName="surname">
+  </div>
+
+  <div class="form-group">
+    <label>Maiden Name</label>
+    <input type="text" class="form-control" placeholder="" name="maiden_name" formControlName="maiden_name">
+  </div>
+
+  <div class="form-group">
+    <label>Birth Date</label>
+    <div>
+      <p-calendar formControlName="birth_date" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Country of birth</label>
+    <select class="form-control" name="country_of_birth" formControlName="country_of_birth">
+      <option value="" selected="selected">---------</option>
+      <ng-template [ngIf]="information.countries">
+        <option *ngFor="let item of information.countries" [value]="item.code">
+          {{item.name}}
+        </option>
+      </ng-template>
+    </select>
+  </div>
+
+</form>

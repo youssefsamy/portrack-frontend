@@ -1,0 +1,50 @@
+<div class="may page-prospect">
+  <div class="content">
+    <h4>Operator Detail: {{operator.email}}</h4>
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-active">
+          <label>Username:</label>
+        </th>
+        <td>{{operator.username}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>First Name:</label>
+        </th>
+        <td>{{operator.first_name}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Last Name:</label>
+        </th>
+        <td>{{operator.last_name}}</td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Email:</label>
+        </th>
+        <td>{{operator.email}}</td>
+      </tr>
+    </table>
+
+    <h6>Clients Assigned</h6>
+    <table class="table table-bordered">
+      <thead>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Name</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of operatorDetail.clients">
+          <td>{{client.id}}</td>
+          <td>{{client.code}}</td>
+          <td>{{client.name}}</td>
+        </tr>
+        <tr *ngIf="!operatorDetail.clients.length">
+          <td class="text-center" colspan="3">No assigned clients</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

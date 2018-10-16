@@ -1,0 +1,62 @@
+<!-- Content  -->
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      <br>
+      <h3>Contact Management</h3>
+      <p>
+        <a class="btn btn-secondary" [routerLink]="['/app/contact/list']">List Contacts</a>
+        <a class="btn btn-secondary" [routerLink]="['/app/contact/create']">Create New Contact</a>
+        <a class="btn btn-secondary" [routerLink]="['/app/contact/send-mail']">Send Mail</a>
+      </p>
+
+      <div class="d-flex mb-2 align-items-center">
+        <div>
+          <input type="text" class="form-control search-control" placeholder="Search..." [(ngModel)]="contactFilter">
+        </div>
+        <p class="ml-auto mr-1 mb-0">
+          Show
+          <select name="prmPageSize" [(ngModel)]="contactData.pageSize">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          entries
+        </p>
+      </div>
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Primary Email</th>
+            <th>myIdeal Email</th>
+            <th>Names</th>
+            <th>Surname</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let contact of contactList | filterBy: ['primary_email','generated_internal_email','first_name', 'last_name']: contactFilter | paginate: {itemsPerPage: contactData.pageSize, currentPage: contactData.page}; let i = index">
+            <td>{{i + 1}}</td>
+            <td>
+              <a [routerLink]="['/app/contact/update/' + contact.id]">{{contact.primary_email}}</a>
+            </td>
+            <td>
+              {{contact.generated_internal_email}}
+            </td>
+            <td>{{contact.first_name}}</td>
+            <td>{{contact.last_name}}</td>
+          </tr>
+
+          <tr *ngIf="loading">
+            <td colspan="5" class="text-center">
+              <i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-paginator [total]="(contactList | filterBy: ['primary_email','generated_internal_email','first_name', 'last_name']: contactFilter).length"
+        [currentPage]="contactData.page" [pageSize]="contactData.pageSize" (change)="contactData.page = $event"></app-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="content">
+  <form [formGroup]="form" class="pt-0">
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-active">
+          <label for="title">Title:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'folder')">
+          <select class="form-control" id="title" formControlName="folder">
+            <option value="">[Select Title]</option>
+            <option *ngFor="let item of titles" [value]="item.id">{{item.name}}</option>
+          </select>
+          <div *ngIf="validate.getFieldErrors(form, 'folder').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Name:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'name')">
+          <input type="text" class="form-control" id="name" placeholder="" formControlName="name">
+          <div *ngIf="validate.getFieldErrors(form, 'name').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Document:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'file')">
+          <input type="file" class="form-control" id="file" placeholder="" formControlName="file" (change)="fileChangeListener($event)">
+          <div *ngIf="validate.getFieldErrors(form, 'file').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Description:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'description')">
+          <textarea class="form-control" id="description" placeholder="" formControlName="description"></textarea>
+          <div *ngIf="validate.getFieldErrors(form, 'description').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div id="orderbtn">
+      <button class="btn btn-secondary" (click)="add()">Add</button>
+      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

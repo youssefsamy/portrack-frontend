@@ -1,0 +1,68 @@
+<div class="may">
+  <div class="content">
+    <div class="d-flex align-items-center my-3">
+      <h3 class="m-0 p-0">Task Management</h3>
+    </div>
+    <a [routerLink]="['/operator/task/create']" class="btn btn-secondary">
+      <i class="fa fa-plus"></i>Add Task</a>
+
+    <div class="mb-2 clearfix">
+      <div class="pull-right">
+        <label>Tasks assigned to :</label>
+        <select name="task-assignee-switcher" class="d-inline-block form-control" style="width: auto !important" [(ngModel)]="operatorFilter"
+          (change)="filterTasks()">
+          <option value="">All</option>
+          <option *ngFor="let item of operators" [value]="item.id">{{item.full_name}}</option>
+        </select>
+      </div>
+    </div>
+    <ng-container *ngFor="let project of projects">
+      <h4>
+        <strong>{{project.name}}</strong>
+      </h4>
+      <div class="d-flex mb-2 align-items-center">
+        <div>
+          <input type="text" class="form-control search-control" placeholder="Search..." [(ngModel)]="taskFilter">
+        </div>
+        <p class="ml-auto mr-1 mb-0">
+          Show
+          <select name="prmPageSize" [(ngModel)]="taskData.pageSize">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          entries
+        </p>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Overdue</th>
+            <th>Assigned To</th>
+            <th width="70">Completed</th>
+            <th width="100" class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of project.filteredTasks | filterBy: ['name','overdue_days', 'assigned_to_name']: taskFilter | paginate: {itemsPerPage: taskData.pageSize, currentPage: taskData.page}">
+            <td>{{task.name}}</td>
+            <td>{{task.overdue_days + ' days'}}</td>
+            <td>{{task.assigned_to_name}}</td>
+            <td class="text-center">
+              <input type="checkbox" [checked]="task.completed" (change)="changeTaskComplete($event, task)" />
+            </td>
+            <td class="text-center">
+              <a [routerLink]="['/operator/task/', task.id]">Edit</a>
+            </td>
+          </tr>
+          <tr *ngIf="!project.filteredTasks.length">
+            <td colspan="5" class="text-center">There are no tasks</td>
+          </tr>
+        </tbody>
+      </table>
+      <app-paginator [total]="(project.filteredTasks | filterBy: ['name','overdue_days', 'assigned_to_name']: taskFilter).length"
+        [currentPage]="taskData.page" [pageSize]="taskData.pageSize" (change)="taskData.page = $event"></app-paginator>
+    </ng-container>
+  </div>

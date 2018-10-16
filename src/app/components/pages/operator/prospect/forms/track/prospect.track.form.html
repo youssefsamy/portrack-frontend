@@ -1,0 +1,57 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Filename</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let file of trackFiles">
+      <td>{{file.file_type}}</td>
+      <td>{{file.file_date}}</td>
+      <td>{{getFileName(file.file)}}</td>
+      <td>
+        <a [href]="file.download" target="__blank">Download</a>
+      </td>
+    </tr>
+    <tr>
+      <td *ngIf="!trackFiles.length" class="text-center" colspan="4">
+        No track files added.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <span class="cp" (click)="isCollapsed = !isCollapsed">
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+    <span class="text-primary">Upload File</span>
+  </span>
+</p>
+<form class="pt-0" [formGroup]="form" [collapse]="isCollapsed" (submit)="handleSubmit($event)">
+  <div class="form-group row">
+    <label class="col-3">File Type</label>
+    <div class="col-9" [ngClass]="validate.displayFieldCss(form, 'file_type')">
+      <select class="form-control" name="file_type" formControlName="file_type">
+        <option value="" selected="selected">--Select--</option>
+        <option value="call_memo">Call Memo</option>
+        <option value="picture">Picture</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-3">Date of Data</label>
+    <div class="col-9" [ngClass]="validate.displayFieldCss(form, 'file_date')">
+      <p-calendar formControlName="file_date" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-3">File Content</label>
+    <div class="col-9" [ngClass]="validate.displayFieldCss(form, 'file')">
+      <input type="file" id="fileCont" class="form-control" (change)="onFileChange($event)">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Create Track File</button>
+</form>

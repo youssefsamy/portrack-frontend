@@ -1,0 +1,75 @@
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <h3>Online Order</h3>
+        </div>
+        <div class="col-12">
+            <a type="button" class="btn btn-secondary" [routerLink]="['/client/orderbuy/create']">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Buy Security</a>
+            <a type="button" class="btn btn-secondary active" [routerLink]="['/client/ordersell/create']">
+                <i class="fa fa-minus-circle" aria-hidden="true"></i>&nbsp;Sell Security</a>
+            <a type="button" class="btn btn-secondary" [routerLink]="['/client/orderfx/create']">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;FX Order</a>
+        </div>
+        <div class="col-12 col-md-12 col-lg-12">
+            <h4>Sell</h4>
+            <br>
+            <form [formGroup]="form">
+                <table class="table table-bordered">
+                    <thead class="table-active">
+                        <tr>
+                            <th>ISIN</th>
+                            <th>Amount</th>
+                            <th>Price Limit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'isinString')">
+                                    <ISIN formControlName="isinString" (change)="changeISIN()"></ISIN>
+                                    <div *ngIf="validate.getFieldErrors(form, 'isinString').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'amount')">
+                                    <input type="text" class="form-control" id="Amount" placeholder="" formControlName="amount">
+                                    <div *ngIf="validate.getFieldErrors(form, 'amount').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'price_limit')">
+                                    <input type="text" class="form-control" id="priceLimit" placeholder="" formControlName="price_limit">
+                                    <div *ngIf="validate.getFieldErrors(form, 'price_limit').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="3">Additional Note</th>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'additional_note')">
+                                    <textarea class="form-control" id="additionalNote" rows="8" formControlName="additional_note"></textarea>
+                                    <div *ngIf="validate.getFieldErrors(form, 'additional_note').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div id="orderbtn">
+                    <button type="submit" class="btn btn-secondary" (click)="placeOrder()">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

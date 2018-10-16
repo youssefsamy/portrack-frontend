@@ -1,0 +1,47 @@
+<div class="content">
+  <div *ngIf="holding">
+    <h4>All Transactions - Breakdown for Holding "{{holding.pv_code}}"</h4>
+    <table class="table table-bordered">
+      <thead class="table-active">
+        <tr>
+          <th>TXN ID</th>
+          <th>TXN Type</th>
+          <th>Account</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>CRY</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of holding.transactions">
+          <td *ngIf="item.txn_type == 'CASH'">
+            <a [routerLink]="['/operator/transaction/detail/cash/' + item.id]">{{item.internal_code}}</a>
+          </td>
+          <td *ngIf="item.txn_type == 'DEPOSIT'">
+            <a [routerLink]="['/operator/transaction/detail/deposit/' + item.id]">{{item.internal_code}}</a>
+          </td>
+          <td *ngIf="item.txn_type == 'FX'">
+            <a [routerLink]="['/operator/transaction/detail/fx/' + item.id]">{{item.internal_code}}</a>
+          </td>
+          <td *ngIf="item.txn_type == 'LOAN'">
+            <a [routerLink]="['/operator/transaction/detail/loan/' + item.id]">{{item.internal_code}}</a>
+          </td>
+          <td *ngIf="item.txn_type == 'SECURITY'">
+            <a [routerLink]="['/operator/transaction/detail/security/' + item.id]">{{item.internal_code}}</a>
+          </td>
+          <td>{{item.txn_type}}</td>
+          <td>{{item.account_data.code}}</td>
+          <td>{{item.settlement_at | date: 'yyyy-dd-MM'}}</td>
+          <td>{{item.computed_description.length > 20? item.computed_description.substr(0, 20) + '...' : item.computed_description}}</td>
+          <td>{{item.computed_currency}}</td>
+          <td>{{item.computed_nominal_amount}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+  <div class="loading text-center" *ngIf="!holding">
+    <i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
+  </div>
+</div>

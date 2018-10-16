@@ -1,0 +1,65 @@
+<div class="may">
+  <div class="content">
+    <block-prospect-header></block-prospect-header>
+    <h4>Prospect Profile Search</h4>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <form [formGroup]="form" (submit)="search($event)">
+          <label for="search">Enter "Name" and/or "Surname" of the prospect you are looking for</label>
+          <div class="form-group" style="display: flex" [ngClass]="validate.displayFieldCss(form, 'query')">
+            <input type="text" class="form-control" formControlName="query" style="width:auto; flex: 1; margin-right: 1em">
+            <button type="submit" class="btn btn-secondary">Search</button>
+          </div>
+          <div *ngIf="validate.getFieldErrors(form, 'query').required" class="text-danger">
+            This field is required
+          </div>
+          <div *ngIf="!validate.getFieldErrors(form, 'query').required && validate.getFieldErrors(form, 'query').minlength" class="text-danger">
+            Query should be 4 characters at least
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <ng-container *ngIf="prospects.length">
+      <div class="d-flex mb-2 align-items-center">
+        <div>
+          <input type="text" class="form-control search-control" placeholder="Search..." [(ngModel)]="prospectFilter">
+        </div>
+        <p class="ml-auto mr-1 mb-0">
+          Show
+          <select name="prmPageSize" [(ngModel)]="prospectData.pageSize">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          entries
+        </p>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Relationship Status</th>
+            <th>Advisors</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of prospects | filterBy: ['names','surname', 'relationship_status.name', 'internal_connections[0].operator_name']: prospectFilter | paginate: {itemsPerPage: prospectData.pageSize, currentPage: prospectData.page}">
+            <td>{{item.names}}</td>
+            <td>{{item.surname}}</td>
+            <td>{{item.relationship_status && item.relationship_status.name}}</td>
+            <td>{{item.internal_connections && item.internal_connections[0].operator_name}}</td>
+            <td>
+              <a [routerLink]="['/operator/prospect/edit', item.id]">Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-paginator [total]="(prospects | filterBy: ['names','surname', 'relationship_status.name', 'internal_connections[0].operator_name']: prospectFilter).length"
+        [currentPage]="prospectData.page" [pageSize]="prospectData.pageSize" (change)="prospectData.page = $event"></app-paginator>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="may page-prospect">
+  <div class="content">
+    <h4>New Client Account</h4>
+    <form [formGroup]="form" class="pt-0" (submit)="handleSubmit($event)">
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Code</label>
+        <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'code')">
+          <input type="text" class="form-control" formControlName="code">
+          <div *ngIf="validate.getFieldErrors(form, 'code').required" class="text-danger">
+            This field is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Account Number</label>
+        <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_number')">
+          <input type="text" class="form-control" formControlName="account_number">
+          <div *ngIf="validate.getFieldErrors(form, 'account_number').required" class="text-danger">
+            This field is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Swift Code</label>
+        <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'swift_code')">
+          <input type="text" class="form-control" formControlName="swift_code">
+          <div *ngIf="validate.getFieldErrors(form, 'swift_code').required" class="text-danger">
+            This field is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'description')">
+          <textarea class="form-control" formControlName="description"></textarea>
+          <div *ngIf="validate.getFieldErrors(form, 'description').required" class="text-danger">
+            This field is required
+          </div>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend>Account Custodian</legend>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.name')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.name')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.name').required" class="text-danger">
+              This field is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Code</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.code')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.code')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.code').required" class="text-danger">
+              This field is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">First Name</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.contact_first_name')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.contact_first_name')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_first_name').required" class="text-danger">
+              This field is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Last Name</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.contact_last_name')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.contact_last_name')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_last_name').required" class="text-danger">
+              This field is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.contact_email')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.contact_email')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_email').required; else emailBlock" class="text-danger">
+              This field is required
+            </div>
+            <ng-template #emailBlock>
+              <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_email').email" class="text-danger">
+                Invalid email
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Phone Number</label>
+          <div class="col-sm-10" [ngClass]="validate.displayFieldCss(form, 'account_custodian.contact_phone')">
+            <input type="text" class="form-control" [formControl]="form.get('account_custodian.contact_phone')">
+            <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_phone').required; else phoneBlock" class="text-danger">
+              This field is required
+            </div>
+            <ng-template #phoneBlock>
+              <div *ngIf="validate.getFieldErrors(form, 'account_custodian.contact_phone').phone" class="text-danger">
+                Invalid phone number
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-secondary">Submit</button>
+      <a class="btn btn-secondary" [routerLink]="['/admin/detail/client', userId]">Cancel</a>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Place</th>
+      <th>Country</th>
+      <th>Notes</th>
+      <th>Follow up</th>
+      <th>Interests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let memo of callMemos">
+      <td>{{memo.date_of_meeting}}</td>
+      <td>{{memo.meeting_place && memo.meeting_place.name}}</td>
+      <td>{{memo.country}}</td>
+      <td>{{memo.meeting_notes}}</td>
+      <td>{{memo.followup}}</td>
+      <td>{{getInterests(memo.interests)}}</td>
+    </tr>
+    <tr>
+      <td *ngIf="!callMemos.length" class="text-center" colspan="6">
+        No call memos added.
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <span class="cp" (click)="isCollapsed = !isCollapsed">
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
+    <span class="text-primary">Create Memo</span>
+  </span>
+</p>
+<form class="pt-0" [formGroup]="form" [collapse]="isCollapsed" (submit)="createCallMemo($event)">
+  <div class="form-group">
+    <label for="DOM">Date of Meeting</label>
+    <div [ngClass]="validate.displayFieldCss(form, 'date_of_meeting')">
+      <p-calendar formControlName="date_of_meeting" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="meetPlace">Meeting Place</label>
+    <div [ngClass]="validate.displayFieldCss(form, 'meeting_place')">
+      <select class="form-control" id="meetPlace" name="meeting_place" formControlName="meeting_place">
+        <option value="" selected="selected">---------</option>
+        <ng-template [ngIf]="information.meeting_places">
+          <option *ngFor="let item of information.meeting_places" [value]="item.id">
+            {{item.name}}
+          </option>
+        </ng-template>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Meeting City</label>
+    <input type="text" class="form-control" name="city" formControlName="city">
+  </div>
+  <div class="form-group">
+    <label>Meeting Country</label>
+    <div [ngClass]="validate.displayFieldCss(form, 'country')">
+      <select class="form-control" name="country" formControlName="country">
+        <option value="" selected="selected">---------</option>
+        <ng-template [ngIf]="information.countries">
+          <option *ngFor="let item of information.countries" [value]="item.code">
+            {{item.name}}
+          </option>
+        </ng-template>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="meetNotes">Meeting Notes</label>
+    <textarea id="meetNotes" rows="5" class="form-control" name="meeting_notes" formControlName="meeting_notes"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="followup">Followup</label>
+    <textarea id="followup" rows="5" class="form-control" name="followup" formControlName="followup"></textarea>
+  </div>
+  <div class="form-check" *ngIf="information.interests">
+    <ng-template ngFor let-interest [ngForOf]="information.interests">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" [checked]="interests.indexOf(interest.id) > -1" (change)="handleInterestChange($event, interest.id)">&nbsp;{{interest.name}}
+      </label>
+      <br>
+    </ng-template>
+  </div>
+  <button class="btn btn-primary">Create Call Memo</button>
+</form>

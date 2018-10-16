@@ -1,0 +1,35 @@
+.content {
+  background: #fff;
+  padding: 20px 20px 20px 20px;
+
+  .create-link {
+    font-size: 13px;
+    line-height: 30px;
+  }
+}
+.btn {
+  border-radius: 0;
+}
+
+.btn-secondary {
+  background: #eaeaea;
+  border-color: #000;
+  margin-right: 10px;
+}
+a.btn {
+  text-decoration: none;
+  color: black;
+}
+.pagination.justify-content-end {
+  margin-top: 0;
+}
+.page-item .page-link {
+  border: none;
+}
+
+.page-link .fa {
+  font-size: 1.2em;
+}
+p {
+  font-size: 1.2em;
+}

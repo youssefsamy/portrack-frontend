@@ -1,0 +1,36 @@
+<div class="content">
+  <form [formGroup]="form" class="pt-0">
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-active">
+          <label for="title">Category:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'category')">
+          <select class="form-control" id="recipient" formControlName="category">
+            <option value="">[Select Category]</option>
+            <option *ngFor="let item of categories" [value]="item.id">{{item.name}}</option>
+          </select>
+          <div *ngIf="validate.getFieldErrors(form, 'category').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="table-active">
+          <label>Title:</label>
+        </th>
+        <td [ngClass]="validate.displayFieldCss(form, 'name')">
+          <input type="text" class="form-control" id="subj" placeholder="" formControlName="name">
+          <div *ngIf="validate.getFieldErrors(form, 'name').required" class="text-danger">
+            This field is required
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div id="orderbtn">
+      <button class="btn btn-secondary" (click)="add()">Add</button>
+      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

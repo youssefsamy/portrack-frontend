@@ -1,0 +1,46 @@
+<div class="may">
+  <div class="content">
+    <block-prospect-header></block-prospect-header>
+    <h4>My NNMS</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Names
+            <a (click)="sortProspect('names', 'asc')">+</a>
+            <a (click)="sortProspect('names', 'desc')">-</a>
+          </th>
+          <th>Surname
+            <a (click)="sortProspect('surname', 'asc')">+</a>
+            <a (click)="sortProspect('surname', 'desc')">-</a>
+          </th>
+          <th>Relationship
+            <a (click)="sortProspect('relationship_status.name', 'asc')">+</a>
+            <a (click)="sortProspect('relationship_status.name', 'desc')">-</a>
+          </th>
+          <th>NNM
+            <a (click)="sortProspect('net_new_money', 'asc')">+</a>
+            <a (click)="sortProspect('net_new_money', 'desc')">-</a>
+          </th>
+          <th>Arrives at
+            <a (click)="sortProspect('arrives_at', 'asc')">+</a>
+            <a (click)="sortProspect('arrives_at', 'desc')">-</a>
+          </th>
+          <th width="70">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of prospects">
+          <td>{{item.names}}</td>
+          <td>{{item.surname}}</td>
+          <td>{{item.relationship_status && item.relationship_status.name}}</td>
+          <td>{{item.net_new_money}}</td>
+          <td>{{item.arrives_at}} days</td>
+          <td>
+            <a [routerLink]="['/operator/prospect/edit', item.id]">edit</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

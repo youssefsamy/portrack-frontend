@@ -1,0 +1,156 @@
+<div class="content">
+  <div *ngIf="transactionDetail && currencies">
+    <h4>
+      <span class="text-uppercase font-weight-bold">Cash Transaction</span> {{transactionDetail.internal_code}}</h4>
+    <br>
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-8">
+        <h6>Details</h6>
+        <table class="table table-bordered">
+          <thead class="table-active">
+            <tr>
+              <th>Type</th>
+              <th>ISIN</th>
+              <th colspan="2">Security Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-weight-bold" [ngClass]="{'bg-green': !transactionDetail.is_sell, 'bg-red': transactionDetail.is_sell}">{{transactionDetail.is_sell ? "SELL" : "BUY"}}</td>
+              <td>{{transactionDetail.security_identifier}}</td>
+              <td colspan="2">{{transactionDetail.security_description}}</td>
+            </tr>
+          </tbody>
+          <thead class="table-active">
+            <tr>
+              <th>Client Price</th>
+              <th>Advisor Price</th>
+              <th colspan="2">Nominal Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{transactionDetail.client_price}}</td>
+              <td>{{transactionDetail.operator_price}}</td>
+              <td colspan="2">{{transactionDetail.nominal_amount}}</td>
+            </tr>
+          </tbody>
+          <thead class="table-active">
+            <tr>
+              <th>Accured Intrese</th>
+              <th>Gross Amount</th>
+              <th colspan="2">Net Traded Amt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{transactionDetail.accrued_interest_amount}}</td>
+              <td>{{transactionDetail.gross_amount}}</td>
+              <td>{{currencies[transactionDetail.txn_currency]}}</td>
+              <td>{{transactionDetail.net_traded_amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-bordered">
+          <thead class="table-active">
+            <tr>
+              <th colspan="2">Fixed Comission</th>
+              <th colspan="2">Ticket Fee</th>
+              <th colspan="2">3rd Party Fee</th>
+              <th colspan="2">Misc. Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-uppercase">{{currencies[transactionDetail.fix_commission_currency]}}</td>
+              <td>{{transactionDetail.fix_commission_amount}}</td>
+              <td class="text-uppercase">{{currencies[transactionDetail.ticket_fee_currency]}}</td>
+              <td>{{transactionDetail.ticket_fee_amount}}</td>
+              <td class="text-uppercase">{{currencies[transactionDetail.third_party_fee_currency]}}</td>
+              <td>{{transactionDetail.third_party_fee_amount}}</td>
+              <td class="text-uppercase">{{currencies[transactionDetail.misc_fee_currency]}}</td>
+              <td>{{transactionDetail.misc_fee_amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h6>Description</h6>
+        <table class="table table-bordered">
+          <tr>
+            <th class="table-active">Short</th>
+            <td>{{transactionDetail.short_description}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Long</th>
+            <td>{{transactionDetail.description}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <h6>General Information</h6>
+        <table class="table table-bordered">
+          <tr>
+            <th class="table-active">Status</th>
+            <td>
+              <span class="text-uppercase text-warning">Realized</span>&nbsp;
+              <!-- <a class="text-primary">
+                  <u>more info</u>
+                </a> -->
+            </td>
+          </tr>
+          <tr>
+            <th class="table-active">Client ID</th>
+            <td>{{transactionDetail.client}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Account ID</th>
+            <td>{{transactionDetail.account}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Custodian Order ID</th>
+            <td>{{transactionDetail.custodian_order_id}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Custodian TXN ID</th>
+            <td>{{transactionDetail.custodian_txn_id}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Internal Code</th>
+            <td>{{transactionDetail.internal_code}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Transfer</th>
+            <td>No</td>
+          </tr>
+          <tr>
+            <th class="table-active">Operator ID</th>
+            <td>{{transactionDetail.operator}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Related Order</th>
+            <td>None</td>
+          </tr>
+        </table>
+        <br>
+        <h6>Date/Time</h6>
+        <table class="table table-bordered">
+          <tr>
+            <th class="table-active">Transaction Date</th>
+            <td>{{transactionDetail.transaction_at | date: 'MM/dd/yyyy'}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Settlement Date</th>
+            <td>{{transactionDetail.settlement_at | date: 'MM/dd/yyyy'}}</td>
+          </tr>
+          <tr>
+            <th class="table-active">Created At</th>
+            <td>{{transactionDetail.created | date: 'MM/dd/yyyy'}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="loading text-center" *ngIf="!transactionDetail || !currencies">
+    <i class="fa fa-spinner fa-spin fa-fw fa-2x"></i>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <h3>Welcome To Ideal Portal</h3>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-secondary" (click)="gotoPortfolio()">
+                <i class="fa fa-file" aria-hidden="true"></i>&nbsp;Portrack</button>
+            <a class="btn btn-secondary" [routerLink]="['/operator/prospect/search']">
+                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;PRM</a>
+            <a class="btn btn-secondary" [routerLink]="['/operator/portfolio/waiting-orders']">
+                <i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;Placed Orders</a>
+            <a class="btn btn-secondary" [routerLink]="['/operator/security/new']">
+                <i class="fa fa-list-ul" aria-hidden="true"></i>&nbsp;Create New Security</a>
+            <h4>Latest PRM Files</h4>
+            <p>These files are related to the prospect whom you are related to.</p>
+            <p>Show
+                <select name="prmPageSize" [(ngModel)]="prospectFile.pageSize" (change)="onProspectPageChange()">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                entries
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Prospect</th>
+                        <th>Date of Data</th>
+                        <th>Uploaded By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of prospectFile.data | paginate: {itemsPerPage: prospectFile.pageSize, currentPage: prospectFile.page}">
+                        <td>
+                            <a [href]="item.file" target="_blank">{{getFileName(item.file)}}</a>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/operator/prospect/edit/', item.prospect_details.id]">{{item.prospect_details.name}}</a>
+                        </td>
+                        <td>{{item.file_date}}</td>
+                        <td>{{item.operator_details.name}}</td>
+                    </tr>
+                    <tr *ngIf="!prospectFile.data.length">
+                        <td colspan="4" class="text-center">No prospect files found</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <app-paginator [total]="prospectFile.data.length" [currentPage]="prospectFile.page" [pageSize]="prospectFile.pageSize" (change)="prospectFile.page = $event"></app-paginator>
+        </div>
+        <div class="col-12">
+            <h4 class="pt-0">Latest FMS Files</h4>
+            <p>These files are files which you have permission to display.</p>
+            <p>Show
+                <select name="fmsPageSize" [(ngModel)]="fmsFile.pageSize" (change)="onProspectPageChange()">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                entries
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Sender</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of fmsFile.data | paginate: {itemsPerPage: fmsFile.pageSize, currentPage: fmsFile.page}">
+                        <td>
+                            <a [href]="item.file" target="_blank">{{item.name}}</a>
+                        </td>
+                        <td>
+                            {{item.category_details && item.category_details.name}}
+                        </td>
+                        <td>{{item.created | date: 'yyyy-MM-dd'}}</td>
+                        <td>{{item.uploader_details && item.uploader_details.name}}</td>
+                    </tr>
+                    <tr *ngIf="!fmsFile.data.length">
+                        <td colspan="4" class="text-center">No FMS files found</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <app-paginator [total]="fmsFile.data.length" [currentPage]="fmsFile.page" [pageSize]="fmsFile.pageSize" (change)="fmsFile.page = $event"></app-paginator>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+p {
+  font-size: 1.2em;
+}
+.page-link {
+  border: none;
+  font-size: 1.2em;
+  .fa {
+    font-size: 1.2em;
+    border: 1px solid gray;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 100%;
+  }
+}

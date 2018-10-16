@@ -1,0 +1,15 @@
+<div class="content" id="page-content">
+  <h1>page not found</h1>
+  <div class="login-info">
+    <p *ngIf="setting.getAppSetting('is_loggedin')">
+      Welcome back {{setting.getUserSetting('username')}}
+      <br>
+      <a [routerLink]="['/client/dashboard']" *ngIf="setting.getUserSetting('profile').role == 40">Click to go to your dashboard</a>
+      <a [routerLink]="['/operator/dashboard']" *ngIf="setting.getUserSetting('profile').role == 30">Click to go to your dashboard</a>
+      <a [routerLink]="['/admin/dashboard']" *ngIf="setting.getUserSetting('profile').role == 20">Click to go to your dashboard</a>
+    </p>
+    <p *ngIf="!setting.getAppSetting('is_loggedin')">
+      <a [routerLink]="['/']">Click to go to Home page</a>
+    </p>
+  </div>
+</div>

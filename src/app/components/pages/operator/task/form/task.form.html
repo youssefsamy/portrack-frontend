@@ -1,0 +1,59 @@
+<form [formGroup]="form" class="pt-0">
+  <table class="table table-bordered">
+    <tr>
+      <th class="table-active">
+        <label for="title">Project:</label>
+      </th>
+      <td [ngClass]="validate.displayFieldCss(form, 'project')">
+        <select class="form-control" formControlName="project">
+          <option value="">--Select--</option>
+          <option *ngFor="let item of projects" [value]="item.id">{{item.name}}</option>
+        </select>
+        <div *ngIf="validate.getFieldErrors(form, 'project').required" class="text-danger">
+          This field is required
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th class="table-active">
+        <label>Subject:</label>
+      </th>
+      <td [ngClass]="validate.displayFieldCss(form, 'name')">
+        <input type="text" class="form-control" formControlName="name">
+        <div *ngIf="validate.getFieldErrors(form, 'name').required" class="text-danger">
+          This field is required
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th class="table-active">
+        <label>Assigned to:</label>
+      </th>
+      <td [ngClass]="validate.displayFieldCss(form, 'assigned_to')">
+        <select class="form-control" formControlName="assigned_to">
+          <option value="">--Select--</option>
+          <option *ngFor="let item of operators" [value]="item.id">{{item.full_name}}</option>
+        </select>
+        <div *ngIf="validate.getFieldErrors(form, 'assigned_to').required" class="text-danger">
+          This field is required
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th class="table-active">
+        <label>Deadline:</label>
+      </th>
+      <td [ngClass]="validate.displayFieldCss(form, 'deadline')">
+        <p-calendar formControlName="deadline" dateFormat="yy-mm-dd"></p-calendar>
+        <div *ngIf="validate.getFieldErrors(form, 'deadline').required" class="text-danger">
+          This field is required
+        </div>
+        <div *ngIf="validate.getFieldErrors(form, 'deadline').date" class="text-danger">
+          This field must be date
+        </div>
+      </td>
+    </tr>
+  </table>
+  <button type="button" class="btn btn-secondary" (click)="handleSubmit($event)">Submit</button>
+  <a class="btn btn-secondary" [routerLink]="['/operator/task/list']">Cancel</a>
+</form>

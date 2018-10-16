@@ -1,0 +1,95 @@
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <h3>Online Order</h3>
+        </div>
+        <div class="col-12">
+            <a type="button" class="btn btn-secondary" [routerLink]="['/client/orderbuy/create']">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Buy Security</a>
+            <a type="button" class="btn btn-secondary" [routerLink]="['/client/ordersell/create']">
+                <i class="fa fa-minus-circle" aria-hidden="true"></i>&nbsp;Sell Security</a>
+            <a type="button" class="btn btn-secondary active" [routerLink]="['/client/orderfx/create']">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;FX Order</a>
+            <h4>FX</h4>
+            <br>
+            <form [formGroup]="form">
+                <table class="table table-bordered">
+                    <thead class="table-active">
+                        <tr>
+                            <th>Buy Currency</th>
+                            <th>Buy Amount</th>
+                            <th>Rate</th>
+                            <th>Sell Currency</th>
+                            <th>Sell Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'buy_currency')">
+                                    <select class="form-control" id="buyCurrency" formControlName="buy_currency" (change)="changeCurrency()">
+                                        <option *ngFor="let item of currencies" [value]="item.id">{{item.code}}</option>
+                                    </select>
+                                    <div *ngIf="validate.getFieldErrors(form, 'buy_currency').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'buy_amount')">
+                                    <input type="number" class="form-control" id="buyAmount" placeholder="" formControlName="buy_amount" (input)="changeBuyAmount()">
+                                    <div *ngIf="validate.getFieldErrors(form, 'buy_amount').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'rate')">
+                                    <input type="number" class="form-control" id="rate" placeholder="" formControlName="rate" (input)="changeRate()">
+                                    <div *ngIf="validate.getFieldErrors(form, 'rate').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'sell_currency')">
+                                    <select class="form-control" id="SellCurrency" formControlName="sell_currency" (change)="changeCurrency()">
+                                        <option *ngFor="let item of currencies" [value]="item.id">{{item.code}}</option>
+                                    </select>
+                                    <div *ngIf="validate.getFieldErrors(form, 'sell_currency').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'sell_amount')">
+                                    <input type="number" class="form-control" id="sellAmouunt" placeholder="" formControlName="sell_amount" (input)="changeSellAmount()">
+                                    <div *ngIf="validate.getFieldErrors(form, 'sell_amount').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="5">Additional Note</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <div class="form-group" [ngClass]="validate.displayFieldCss(form, 'additional_note')">
+                                    <textarea class="form-control" id="additionalNote" rows="8" formControlName="additional_note"></textarea>
+                                    <div *ngIf="validate.getFieldErrors(form, 'additional_note').required" class="text-danger">
+                                        This field is required
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div id="orderbtn">
+                    <button type="submit" class="btn btn-secondary" (click)="placeOrder()">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
